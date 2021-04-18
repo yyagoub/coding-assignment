@@ -15,27 +15,27 @@ public class CustomerController {
     private CustomerService customerService;
 
     @GetMapping
-    public List<CustomerDto> getMapping(){
+    public List<CustomerDto> viewAllCustomers(){
         return customerService.findAllCustomers();
     }
 
     @GetMapping("/{id}")
-    public CustomerDto getMappingById(@PathVariable Long id){
+    public CustomerDto viewACustomer(@PathVariable Long id){
         return customerService.findCustomerById(id);
     }
 
     @PostMapping
-    public CustomerDto postMapping(@RequestBody CustomerDto customerDto){
+    public CustomerDto createACustomer(@RequestBody CustomerDto customerDto){
         return customerService.createCustomer(customerDto);
     }
 
      @PutMapping
-    public CustomerDto putMapping(@RequestBody CustomerDto customerDto){
+    public CustomerDto updateACustomer(@RequestBody CustomerDto customerDto){
         return customerService.updateCustomer(customerDto);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteMapping(@PathVariable Long id){
+    public void deleteACustomer(@PathVariable Long id){
         customerService.removeCustomerById(id);
     }
 }

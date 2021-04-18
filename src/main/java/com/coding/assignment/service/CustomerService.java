@@ -73,6 +73,14 @@ public class CustomerService {
         customerRepository.deleteById(id);
     }
 
+    protected CustomerDto addServiceToCustomer(ServiceDto serviceDto){
+        Customer customer = checkCustomerIdExists(serviceDto.getCustomerId());
+        Service service = serviceService.mapServiceDtoToService(serviceDto);
+        customer.getServices().add(service);
+        customer = customerRepository.save(customer);
+        return mapCustomerToCustomerDto(customer);
+    }
+
     private void validateCustomerDto(final CustomerDto customerDto){
         List<ValidationError> errors = new ArrayList<>();
         if (customerDto.getAddress() == null || customerDto.getAddress().isEmpty())
@@ -86,7 +94,7 @@ public class CustomerService {
             throw new UnprocessableEntityException(errors);
     }
 
-    private Customer checkCustomerIdExists(final Long id){
+    protected Customer checkCustomerIdExists(final Long id){
         if(id == null)
             throw new UnprocessableEntityException(errorsHandler.publish("customer", "id.not.exists"));
         Optional<Customer> customer = getOptionalCustomerById(id);

@@ -30,11 +30,11 @@ public class ApplicationSecurity extends WebSecurityConfigurerAdapter {
 
     private static final String[] AUTH_WHITELIST = {
             // authenticate
-            "/authenticate",
+            "/authenticate"
             // -- swagger ui
-            "/swagger-resources/**", "/swagger-ui/**", "/v2/api-docs", "/webjars/**",
+            , "/swagger-resources/**", "/swagger-ui/**", "/v2/api-docs", "/webjars/**"
             // for testing
-            // , "/**"
+            //, "/**"
     };
 
     @Bean

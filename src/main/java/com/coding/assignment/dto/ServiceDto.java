@@ -11,4 +11,5 @@ public class ServiceDto {
     private String Service;
     private BigDecimal price;
     private Set<CustomerDto> customerDtos;
+    private Long customerId;
 }

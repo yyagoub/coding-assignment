@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/service")
@@ -15,27 +16,27 @@ public class ServiceController {
     private ServiceService serviceService;
 
     @GetMapping
-    public List<ServiceDto> getMapping(){
+    public List<ServiceDto> viewAllServices(){
         return serviceService.findAllServices();
     }
 
-    @GetMapping("/{id}")
-    public ServiceDto getMappingById(@PathVariable Long id){
-        return serviceService.findServiceById(id);
+    @GetMapping("/{customerId}")
+    public Set<ServiceDto> viewServicesOfACustomer(@PathVariable Long customerId){
+        return serviceService.findServiceByCustomerId(customerId);
     }
 
     @PostMapping
-    public ServiceDto postMapping(@RequestBody ServiceDto serviceDto){
-        return serviceService.createService(serviceDto);
+    public ServiceDto createAServiceForACustomer(@RequestBody ServiceDto serviceDto){
+        return serviceService.createServiceForACustomer(serviceDto);
     }
 
     @PutMapping
-    public ServiceDto putMapping(@RequestBody ServiceDto serviceDto){
+    public ServiceDto updateAService(@RequestBody ServiceDto serviceDto){
         return serviceService.updateService(serviceDto);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteMapping(@PathVariable Long id){
+    public void deleteAService(@PathVariable Long id){
             serviceService.removeService(id);
     }
 }

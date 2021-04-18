@@ -29,13 +29,11 @@ public class ServiceService {
     private CustomerService customerService;
 
     @Transactional
-    public ServiceDto createService(final ServiceDto serviceDto){
+    public ServiceDto createServiceForACustomer(final ServiceDto serviceDto){
         checkServiceIdNotExists(serviceDto.getId());
         validateServiceDto(serviceDto);
-        Service service = mapServiceDtoToService(serviceDto);
-        service.setCustomers(customerService.mapCustomerDtosToCustomers(serviceDto.getCustomerDtos()));
-        service = serviceRepository.save(service);
-        return mapServiceToServiceDto(service);
+        customerService.addServiceToCustomer(serviceDto);
+        return serviceDto;
     }
 
     @Transactional
@@ -48,11 +46,9 @@ public class ServiceService {
         return mapServiceToServiceDto(service);
     }
 
-    public ServiceDto findServiceById(final Long id){
-        Service service = checkServiceIdExists(id);
-        ServiceDto serviceDto = mapServiceToServiceDto(service);
-        serviceDto.setCustomerDtos(customerService.mapCustomersToCustomerDtos(service.getCustomers()));
-        return serviceDto;
+    public Set<ServiceDto> findServiceByCustomerId(final Long customerId){
+        customerService.checkCustomerIdExists(customerId);
+        return mapServicesToServiceDtos(serviceRepository.findServicesByCustomerId(customerId));
     }
 
     public List<ServiceDto> findAllServices(){
